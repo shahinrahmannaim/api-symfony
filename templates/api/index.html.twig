@@ -1,0 +1,53 @@
+{# templates/meals/index.html.twig #}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Meal Search</title>
+    <style>
+        .meal-item {
+            display: flex;
+            margin-bottom: 20px;
+        }
+        .meal-img img {
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+        }
+        .meal-name {
+            margin-left: 20px;
+        }
+        .notFound {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Search for a Meal by Ingredient</h1>
+
+    <form method="get" action="{{ path('meal_search') }}">
+        <input type="text" id="search-input" name="q" value="{{ searchInput }}" placeholder="Enter an ingredient">
+        <button type="submit">Search</button>
+    </form>
+
+    <div id="meal-list">
+        {% if searchInput %}
+            {% if meals %}
+                {% for meal in meals %}
+                    <div class="meal-item" data-id="{{ meal.idMeal }}">
+                        <div class="meal-img">
+                            <img src="{{ meal.strMealThumb }}" alt="food">
+                        </div>
+                        <div class="meal-name">
+                            <h3>{{ meal.strMeal }}</h3>
+                            <a href="#" class="recipe-btn">Get Recipe</a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p class="notFound">Sorry, we didn't find any meal!</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
